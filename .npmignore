@@ -1,0 +1,8 @@
+node_modules
+*.sh
+*.md
+.gitignore
+.npmignore
+*.json
+test
+scripts
