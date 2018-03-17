@@ -9,17 +9,17 @@ const strm = c.pipe(jsonParser);
 const {ops, emitter} = getOplogStreamInterpreter(strm);
 
 
-// ops.delete.subscribe(v => {
-//   console.log('delete happened.');
-// });
-//
-// ops.insert.subscribe(v => {
-//   console.log('insert happened.');
-// });
-//
-// ops.update.subscribe(v => {
-//   console.log('update happened.');
-// });
+ops.delete.subscribe(v => {
+  console.log('delete happened.');
+});
+
+ops.insert.subscribe(v => {
+  console.log('insert happened.');
+});
+
+ops.update.subscribe(v => {
+  console.log('update happened.');
+});
 
 
 emitter.on('update', function(){
@@ -32,5 +32,4 @@ emitter.on('delete', function () {
 
 emitter.on('insert', function () {
   console.log('insert happened.');
-  
 });
