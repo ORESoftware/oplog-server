@@ -2,34 +2,33 @@ import net = require('net');
 import JSONStdio = require('json-stdio');
 import {getOplogStreamInterpreter} from 'oplog.rx';
 
-const c = net.createConnection(6969, 'localhost');
-
+const c = net.connect(6969, 'localhost');
 const jsonParser = JSONStdio.createParser();
 const strm = c.pipe(jsonParser);
-const {ops, emitter} = getOplogStreamInterpreter(strm);
+const {ops: {del,insert,update}, emitter} = getOplogStreamInterpreter(strm);
 
 
-ops.delete.subscribe(v => {
-  console.log('delete happened.');
+del.subscribe(v => {
+  console.log('delete happened 1.');
 });
 
-ops.insert.subscribe(v => {
-  console.log('insert happened.');
+insert.subscribe(v => {
+  console.log('insert happened 1.');
 });
 
-ops.update.subscribe(v => {
-  console.log('update happened.');
+update.subscribe(v => {
+  console.log('update happened 1.');
 });
 
 
-emitter.on('update', function(){
-  console.log('update happened.');
+emitter.on('update', function(v){
+  console.log('update happened 2.',v);
 });
 
-emitter.on('delete', function () {
-  console.log('delete happened.');
+emitter.on('delete', function (v) {
+  console.log('delete happened 2.',v);
 });
 
-emitter.on('insert', function () {
-  console.log('insert happened.');
+emitter.on('insert', function (v) {
+  console.log('insert happened 2.',v);
 });

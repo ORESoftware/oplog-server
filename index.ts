@@ -30,9 +30,9 @@ export const s = net.createServer(function (socket) {
   socket.once('close', function () {
     console.log('client closed.');
     clientMap.delete(socket);
-  })
-  
+  });
 });
+
 
 s.listen(6969);
 
