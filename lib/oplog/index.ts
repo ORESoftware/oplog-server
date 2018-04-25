@@ -6,9 +6,11 @@ import log from 'bunion';
 //project
 export const oplog = new ObservableOplog();
 
-// log.warn(new Error('fooobar'));
-// log.debug(new Error('fooobar'));
-// log.debug('shamrock');
+// log.info(new Error('fooobar'));
+// log.info(new Error('fooobar'));
+log.info('shamrock');
+// log.info('{}P{}{{');
+
 
 oplog.tail().then(function () {
   log.info('successfully started tailing the oplog.');
