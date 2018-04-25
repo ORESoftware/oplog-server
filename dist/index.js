@@ -6,9 +6,8 @@ var mongo_client_1 = require("./mongo-client");
 var bunion_1 = require("bunion");
 var _a = oplog_1.oplog.getOps(), del = _a.del, insert = _a.insert, update = _a.update;
 var getCollection = function (v) {
-    return String(v.ns).split('.')[1];
+    return String(v.ns || '').split('.')[1] || '';
 };
-bunion_1.default.info('loading the oplog');
 var validColls = {
     users: true,
     categories: true,
@@ -30,9 +29,10 @@ var ops = {
 var getOperation = function (v) {
     return v && ops[v.op] || 'unknown';
 };
-mongo_client_1.client.once('connect', function () {
+var subs = [];
+var startActions = function () {
     var db = mongo_client_1.client.db('local');
-    del.subscribe(function (v) {
+    var delSub = del.subscribe(function (v) {
         var collName = getCollection(v);
         var op = getOperation(v);
         var id = getIdFromDoc(v);
@@ -48,7 +48,7 @@ mongo_client_1.client.once('connect', function () {
             });
         });
     });
-    insert.subscribe(function (doc) {
+    var insertSub = insert.subscribe(function (doc) {
         var collName = getCollection(doc);
         var op = getOperation(doc);
         var id = getIdFromDoc(doc);
@@ -63,7 +63,7 @@ mongo_client_1.client.once('connect', function () {
             });
         });
     });
-    update.subscribe(function (doc) {
+    var updateSub = update.subscribe(function (doc) {
         var collName = getCollection(doc);
         var coll = db.collection(collName);
         var op = getOperation(doc);
@@ -90,4 +90,19 @@ mongo_client_1.client.once('connect', function () {
             });
         });
     });
+    subs.push(delSub, insertSub, updateSub);
+};
+mongo_client_1.client.on('disconnect', function () {
+    bunion_1.default.warn('mongo-client disconnected, unsubscribing.');
+    subs.forEach(function (s) {
+        s.unsubscribe();
+    });
 });
+mongo_client_1.client.on('reconnect', function () {
+    bunion_1.default.warn('mongo-client disconnected, unsubscribing.');
+    subs.forEach(function (s) {
+        s.unsubscribe();
+    });
+    startActions();
+});
+mongo_client_1.client.on('connect', startActions);

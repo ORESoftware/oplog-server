@@ -23,6 +23,7 @@
     "json-stdio": "latest",
     "mongodb": "^3.0.7",
     "oplog.rx": "latest",
+    "rxjs": "^6.0.0",
     "socket.io": "^2.1.0"
   },
   "devDependencies": {

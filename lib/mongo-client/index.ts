@@ -5,11 +5,28 @@ import log from 'bunion';
 
 const url = 'mongodb://localhost';
 
-export const client = new (MongoClient as any)(url);
+// {
+//   uri: url,
+//     url: url,
+//   server: {
+//   url: url,
+//     reconnectTries: Number.MAX_VALUE,
+//     autoReconnect: true
+// }
+// }
 
-client.connect(function (err: Error) {
-  if(err){
-    return log.error(err);
+export const client = new MongoClient(url, {
+  server: {
+    url: url,
+    reconnectTries: Number.MAX_VALUE,
+    autoReconnect: true
   }
- log.info('mongo client connected.');
 });
+
+client.connect(
+  function (err: Error) {
+    if (err) {
+      return log.error(err);
+    }
+    log.info('mongo client connected.');
+  });

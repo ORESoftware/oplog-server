@@ -5,14 +5,12 @@ import {oplog} from './oplog';
 import {connections} from "./socket-server";
 import {client} from "./mongo-client";
 import log from 'bunion';
-
 const {del, insert, update} = oplog.getOps();
+import {Subscription} from 'rxjs';
 
 const getCollection = function (v: OplogDoc) {
-  return String(v.ns).split('.')[1];
+  return String(v.ns || '').split('.')[1] || '';
 };
-
-log.info('loading the oplog');
 
 const validColls = <{ [key: string]: boolean }>{
   users: true,
@@ -29,7 +27,7 @@ const getIdFromDoc = function (v: OplogDoc) {
   return v && v.o && v.o._id;
 };
 
-const ops = {
+const ops = <{ [key: string]: string }>{
   'i': 'insert',
   'u': 'uddate',
   'd': 'delete'
@@ -39,21 +37,23 @@ const getOperation = function (v: OplogDoc) {
   return v && ops[v.op] || 'unknown';
 };
 
-client.once('connect', function () {
+const subs: Array<Subscription> = [];
+
+const startActions = function () {
   
   const db = client.db('local');
   
-  del.subscribe(function (v: OplogDoc) {
+  const delSub = del.subscribe(function (v: OplogDoc) {
     
     const collName = getCollection(v);
     const op = getOperation(v);
     const id = getIdFromDoc(v);
-  
-    if(op !== 'delete'){
+    
+    if (op !== 'delete') {
       log.error('operation was expected to be a "delete", but was not:', op);
       return;
     }
-  
+    
     connections.forEach(function (v, k, m) {
       v.send({
         operation: op,
@@ -61,19 +61,19 @@ client.once('connect', function () {
         value: id
       });
     });
-  
+    
   });
   
-  insert.subscribe(function (doc: OplogDoc) {
+  const insertSub = insert.subscribe(function (doc: OplogDoc) {
     
     const collName = getCollection(doc);
     const op = getOperation(doc);
     const id = getIdFromDoc(doc);
     
-    if(op !== 'insert'){
+    if (op !== 'insert') {
       log.error('operation was expected to be an insert, but was not:', op);
     }
-  
+    
     connections.forEach(function (v, k, m) {
       v.send({
         operation: op,
@@ -81,19 +81,16 @@ client.once('connect', function () {
         value: doc.o
       });
     });
-  
-  
   });
   
-  update.subscribe(function (doc: OplogDoc) {
+  const updateSub = update.subscribe(function (doc: OplogDoc) {
     
     const collName = getCollection(doc);
     const coll = db.collection(collName);
     const op = getOperation(doc);
     const id = getIdFromDoc(doc);
-  
-  
-    if(op !== 'update'){
+    
+    if (op !== 'update') {
       log.error('operation was expected to be an update, but was not:', op);
       return;
     }
@@ -122,7 +119,32 @@ client.once('connect', function () {
     
   });
   
+  subs.push(
+    delSub,
+    insertSub,
+    updateSub
+  );
+};
+
+client.on('disconnect', function () {
+  
+  log.warn('mongo-client disconnected, unsubscribing.');
+  subs.forEach(function (s) {
+    s.unsubscribe();
+  });
 });
+
+client.on('reconnect', function () {
+  log.warn('mongo-client disconnected, unsubscribing.');
+  subs.forEach(function (s) {
+    s.unsubscribe();
+  });
+  
+  startActions();
+});
+
+
+client.on('connect', startActions);
 
 
 
