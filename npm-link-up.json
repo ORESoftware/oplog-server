@@ -11,6 +11,7 @@
   ],
   "list": [
     "json-stdio",
-    "oplog.rx"
+    "oplog.rx",
+    "bunion"
   ]
 }

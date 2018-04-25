@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "outDir": "dist",
     "skipLibCheck": true,
     "declaration": true,
     "baseUrl": ".",
@@ -18,5 +19,8 @@
   "exclude": [
     "public",
     "node_modules"
+  ],
+  "include":[
+    "lib"
   ]
 }

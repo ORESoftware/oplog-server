@@ -2,8 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var net = require("net");
 var JSONStdio = require("json-stdio");
+var oplog_1 = require("../oplog");
 var transform2JSON = JSONStdio.transformObject2JSON();
-var t = oplog.getFilteredStream({}).pipe(transform2JSON);
+var t = oplog_1.oplog.getFilteredStream({}).pipe(transform2JSON);
 exports.clientMap = new Map();
 exports.s = net.createServer(function (socket) {
     console.log('client connected.');
