@@ -1,42 +1,16 @@
-import net = require('net');
-export const clientMap = new Map();
-import {ObservableOplog} from 'oplog.rx';
-import JSONStdio = require('json-stdio');
+import * as Server from 'socket.io';
 
-// *** Open A Change Stream ***
-// You can only open a change stream against replica sets or sharded clusters.
-// For a sharded cluster, you must issue the open change stream operation against the mongos.
-// https://docs.mongodb.com/manual/changeStreams/
+const io = Server();
+io.listen(3000);
 
-const oplog = new ObservableOplog();
+export const connections = new Map();
 
-oplog.tail().then(function () {
-  console.log('successfully started tailing the oplog.');
-})
-.catch(function (err: any) {
-  console.error('error while attempting to tail the oplog:', err.message || err);
-});
-
-const transform2JSON = JSONStdio.transformObject2JSON();
-const t = oplog.getFilteredStream({}).pipe(transform2JSON);
-
-export const s = net.createServer(function (socket) {
+io.on('connection', function (c) {
   
-  console.log('client connected.');
+  connections.set(c, c);
   
-  clientMap.set(socket, socket);
-  t.pipe(socket);
-  
-  socket.once('close', function () {
-    console.log('client closed.');
-    clientMap.delete(socket);
+  c.once('disconnect', function () {
+    connections.delete(c);
   });
+  
 });
-
-
-s.listen(6969);
-
-
-
-
-

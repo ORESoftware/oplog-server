@@ -19,10 +19,11 @@
   "license": "MIT",
   "dependencies": {
     "json-stdio": "0.0.1015",
-    "socket.io": "^2.0.4"
+    "socket.io": "^2.1.0"
   },
   "devDependencies": {
     "@types/core-js": "^0.9.46",
-    "@types/node": "^9.4.7"
+    "@types/node": "^9.4.7",
+    "@types/socket.io": "^1.4.33"
   }
 }
