@@ -1,5 +1,5 @@
 
 
-const log = require('cdt-oplog-logger');
+const log = require('†††');
 
 console.log(log);
