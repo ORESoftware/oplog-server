@@ -1,3 +1,5 @@
 
 
-console.log(/h/.test('successfully started tailing the oplog'));
+const log = require('cdt-oplog-logger');
+
+console.log(log);

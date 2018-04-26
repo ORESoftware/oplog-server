@@ -1,10 +1,15 @@
+#!/usr/bin/env node
 'use strict';
+
+import {log, initDefaultLogger} from 'bunion';
+initDefaultLogger({appName: 'fizbizz'});
 
 import {OplogDoc} from 'oplog.rx';
 import {oplog} from './oplog';
 import {connections} from "./socket-server";
 import {client} from "./mongo-client";
-import log from 'bunion';
+
+
 const {del, insert, update} = oplog.getOps();
 import {Subscription} from 'rxjs';
 
@@ -142,7 +147,6 @@ client.on('reconnect', function () {
   
   startActions();
 });
-
 
 client.on('connect', startActions);
 

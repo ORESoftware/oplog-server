@@ -2,8 +2,12 @@
   "name": "cdt-oplog-server",
   "version": "0.0.101",
   "description": "Tails mongodb oplog, updates clients via websockets and/or tcp",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "bin": {
+    "cdt-oplog-server": "dist/index.js"
+  },
   "scripts": {
+    "postinstall": "./scripts/npm/postinstall.sh",
     "test": "suman test"
   },
   "repository": {
@@ -19,11 +23,13 @@
   "license": "MIT",
   "dependencies": {
     "bunion": "latest",
+    "cambiasso": "0.0.103",
     "chalk": "^2.4.0",
     "json-stdio": "latest",
     "mongodb": "^3.0.7",
     "oplog.rx": "latest",
     "rxjs": "^6.0.0",
+    "siamese": "^2.0.9",
     "socket.io": "^2.1.0"
   },
   "devDependencies": {
@@ -31,5 +37,8 @@
     "@types/mongodb": "^3.0.15",
     "@types/node": "^9.4.7",
     "@types/socket.io": "^1.4.33"
+  },
+  "cambiasso": {
+    "cdt-oplog-logger": "dist/logger/index.js"
   }
 }

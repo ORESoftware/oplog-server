@@ -7,8 +7,11 @@ import log from 'bunion';
 export const oplog = new ObservableOplog();
 
 // log.info(new Error('fooobar'));
-// log.info(new Error('fooobar'));
+log.error(new Error('fooobar'));
 log.info('shamrock');
+log.debug('foobar is the newbar', {ron:'jeremmaih'});
+log.warn('foobar');
+log.trace('foobar');
 // log.info('{}P{}{{');
 
 
