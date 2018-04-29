@@ -23,7 +23,7 @@
   "license": "MIT",
   "dependencies": {
     "bunion": "latest",
-    "cambiasso": "0.0.103",
+    "cambiasso": "file:../../oresoftware/cambiasso",
     "chalk": "^2.4.0",
     "json-stdio": "latest",
     "mongodb": "^3.0.7",
@@ -40,6 +40,6 @@
   },
   "cambiasso": {
     "cdt-oplog-logger": "dist/logger/index.js",
-    "†††": "dist/logger/index.js"
+    "///": "dist/logger/index.js"
   }
 }
