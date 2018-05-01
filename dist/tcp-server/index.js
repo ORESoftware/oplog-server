@@ -3,8 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var net = require("net");
 var JSONStdio = require("json-stdio");
 var oplog_1 = require("../oplog");
+var bunion_1 = require("bunion");
 var transform2JSON = JSONStdio.transformObject2JSON();
 var t = oplog_1.oplog.getFilteredStream({}).pipe(transform2JSON);
+bunion_1.default.info('beginning to stream oplog.');
 exports.clientMap = new Map();
 exports.s = net.createServer(function (socket) {
     console.log('client connected.');

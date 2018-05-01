@@ -23,10 +23,15 @@ export const client = new MongoClient(url, {
   }
 });
 
-client.connect(
-  function (err: Error) {
-    if (err) {
-      return log.error(err);
-    }
-    log.info('mongo client connected.');
-  });
+// client.startSession({
+//   server: {
+//     url: url,
+//     reconnectTries: Number.MAX_VALUE,
+//     autoReconnect: true
+//   }
+// });
+
+client.connect(function (err: Error) {
+  if (err) throw err;
+  log.info('mongo client connected.');
+});

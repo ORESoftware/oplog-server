@@ -1,17 +1,14 @@
 #!/usr/bin/env node
 'use strict';
 
-import {log, initDefaultLogger} from 'bunion';
-initDefaultLogger({appName: 'fizbizz'});
-
+import log from 'bunion';
 import {OplogDoc} from 'oplog.rx';
 import {oplog} from './oplog';
 import {connections} from "./socket-server";
 import {client} from "./mongo-client";
 
-
 const {del, insert, update} = oplog.getOps();
-import {Subscription} from 'rxjs';
+import {Subscription, Subscriber} from 'rxjs';
 
 const getCollection = function (v: OplogDoc) {
   return String(v.ns || '').split('.')[1] || '';
@@ -28,7 +25,7 @@ const validColls = <{ [key: string]: boolean }>{
   assignments: true
 };
 
-const getIdFromDoc = function (v: OplogDoc) {
+const getIdFromDoc = function (v: any) {
   return v && v.o && v.o._id;
 };
 
@@ -129,6 +126,7 @@ const startActions = function () {
     insertSub,
     updateSub
   );
+  
 };
 
 client.on('disconnect', function () {

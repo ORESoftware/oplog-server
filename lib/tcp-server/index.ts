@@ -1,6 +1,7 @@
 import net = require('net');
 import JSONStdio = require('json-stdio');
 import {oplog} from "../oplog";
+import log from 'bunion';
 
 // *** Open A Change Stream ***
 // You can only open a change stream against replica sets or sharded clusters.
@@ -12,6 +13,8 @@ import {oplog} from "../oplog";
 
 const transform2JSON = JSONStdio.transformObject2JSON();
 const t = oplog.getFilteredStream({}).pipe(transform2JSON);
+
+log.info('beginning to stream oplog.');
 
 export const clientMap = new Map();
 

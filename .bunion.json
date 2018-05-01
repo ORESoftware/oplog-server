@@ -1,0 +1,6 @@
+{
+  "producer": {
+    "appName": "cdt-oplog-server",
+    "level": "info"
+  }
+}

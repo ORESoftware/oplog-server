@@ -9,4 +9,4 @@ fi
 
 
 
-node dist | bunion -l debug
+node . | bunion -l info --light
