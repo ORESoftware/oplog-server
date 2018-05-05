@@ -16,11 +16,8 @@ const url = 'mongodb://localhost';
 // }
 
 export const client = new MongoClient(url, {
-  server: {
-    url: url,
-    reconnectTries: Number.MAX_VALUE,
-    autoReconnect: true
-  }
+  reconnectTries: Number.MAX_VALUE,
+  autoReconnect: true
 });
 
 // client.startSession({

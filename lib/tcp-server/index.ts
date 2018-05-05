@@ -1,3 +1,5 @@
+'use strict';
+
 import net = require('net');
 import JSONStdio = require('json-stdio');
 import {oplog} from "../oplog";

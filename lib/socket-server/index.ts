@@ -1,3 +1,5 @@
+'use strict';
+
 import * as Server from 'socket.io';
 import {Socket} from "socket.io";
 import log from 'bunion';

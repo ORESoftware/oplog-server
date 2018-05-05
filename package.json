@@ -23,18 +23,18 @@
   "license": "MIT",
   "dependencies": {
     "bunion": "latest",
-    "chalk": "^2.4.0",
+    "chalk": "^2.4.1",
     "json-stdio": "latest",
     "mongodb": "^3.0.7",
     "oplog.rx": "0.0.104",
-    "rxjs": "^6.0.0",
-    "siamese": "^2.0.9",
+    "rxjs": "^6.1.0",
+    "siamese": "^2.0.31",
     "socket.io": "^2.1.0"
   },
   "devDependencies": {
     "@types/core-js": "^0.9.46",
-    "@types/mongodb": "^3.0.15",
-    "@types/node": "^9.4.7",
+    "@types/mongodb": "^3.0.18",
+    "@types/node": "^9.6.12",
     "@types/socket.io": "^1.4.33"
   }
 }
