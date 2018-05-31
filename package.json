@@ -12,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "ssh://git@gitscm.cisco.com/it-gats-cdtechnologyarchitecture-cdtsdaas/cdt-oplog-server.git"
+    "url": "https://github.com/ORESoftware/oplog-server"
   },
   "keywords": [
     "oplog",
     "mongo",
     "cdt"
   ],
-  "author": "CDT team",
+  "author": "Olegzandr VD",
   "license": "MIT",
   "dependencies": {
     "bunion": "latest",
