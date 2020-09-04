@@ -25,7 +25,7 @@
     "bunion": "latest",
     "chalk": "^2.4.1",
     "json-stdio": "latest",
-    "mongodb": "^3.0.7",
+    "mongodb": "^3.1.13",
     "oplog.rx": "0.0.104",
     "rxjs": "^6.1.0",
     "siamese": "^2.0.31",
