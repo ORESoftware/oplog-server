@@ -29,7 +29,7 @@
     "oplog.rx": "0.0.104",
     "rxjs": "^6.1.0",
     "siamese": "^2.0.31",
-    "socket.io": "^2.1.0"
+    "socket.io": "^2.4.0"
   },
   "devDependencies": {
     "@types/core-js": "^0.9.46",
