@@ -1,11 +1,11 @@
 'use strict';
 
-import * as Server from 'socket.io';
-import {Socket} from "socket.io";
+import {Server, Socket} from 'socket.io';
 import log from 'bunion';
 
-const io = Server();
-io.listen(3000);
+const io = new Server(3000, {
+  allowEIO3: true
+});
 
 export const connections = new Map<Socket, Socket>();
 

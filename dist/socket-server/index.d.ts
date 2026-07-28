@@ -1,3 +1,2 @@
-/// <reference types="socket.io" />
-import * as Server from 'socket.io';
-export declare const connections: Map<Server.Socket, Server.Socket>;
+import { Socket } from 'socket.io';
+export declare const connections: Map<Socket, Socket>;

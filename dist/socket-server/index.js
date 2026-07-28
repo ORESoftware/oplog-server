@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Server = require("socket.io");
+var socket_io_1 = require("socket.io");
 var bunion_1 = require("bunion");
-var io = Server();
-io.listen(3000);
+var io = new socket_io_1.Server(3000, {
+    allowEIO3: true
+});
 exports.connections = new Map();
 io.on('connection', function (c) {
     bunion_1.default.debug('new client connection.');

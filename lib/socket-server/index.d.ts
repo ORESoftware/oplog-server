@@ -1,1 +1,2 @@
-export declare const connections: Map<any, any>;
+import { Socket } from 'socket.io';
+export declare const connections: Map<Socket, Socket>;
