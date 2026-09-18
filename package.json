@@ -2,12 +2,13 @@
   "name": "cdt-oplog-server",
   "version": "0.0.101",
   "description": "Tails mongodb oplog, updates clients via websockets and/or tcp",
-  "main": "dist/index.js",
+  "main": "server.js",
   "bin": {
-    "cdt-oplog-server": "dist/index.js"
+    "cdt-oplog-server": "server.js"
   },
   "scripts": {
-    "test": "suman test"
+    "test": "suman test",
+    "test:shutdown": "node scripts/test/shutdown-contract.js server.js"
   },
   "repository": {
     "type": "git",
